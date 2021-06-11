@@ -34,9 +34,13 @@ This is a simple table of airport codes and corresponding cities. It comes from 
 | immigrations | cicid - year - month - cit - res - iata - arrdate - mode - addr - depdate - bir - visa - coun- dtadfil - visapost - occup - entdepa - entdepd - entdepu - matflag - biryear - dtaddto - gender - insnum - airline - admnum - fltno - visatype | stores all i94 immigrations data | fact table |
 | temperature | timestamp - average_temperature - average_temperatur_uncertainty - city - country - latitude - longitude | stores temperature information | dimension table |
 
+
+
 ### Table decision
 
-We want to have the immigrations data to store the key information. We can then enrich the data with airports, demographics and temperature data. To do so efficiently, we need identifiers on all tables so they can be joined efficiently. This includes the city and the iata code.
+We want to have the immigrations data to store the key information. We can then enrich the data with airports, demographics and temperature data. To do so efficiently, we need identifiers on all tables so they can be joined efficiently. This includes the city and the iata code. Using a snowflake schema.
+
+![](schema.PNG)
 
 ## Mapping Out Data Pipelines
 
@@ -61,3 +65,77 @@ The I94 data described immigration events aggregated on a monthly base. Thus, up
   * Use Airflow and create a DAG that performs the logic of the described pipeline. If executing the DAG fails, I recommend to automatically send emails to the engineering team using Airflow's builtin feature, so they can fix potential issues soon.
 * The database needed to be accessed by 100+ people.
   * Use RedShift to have the data stored in a way that it can efficiently be accessed by many people. Also, we can use a database such as PostgreSQL in a more cost-efficient setting that will, however, have slightly lower performance due to its nature.
+
+### Data Dictionary  
+
+#### Immigration 
+
+| Field          | Desciption                     |
+| -------------- | ------------------------------ |
+| cicid          | Individual Number of Immigrant |
+| year           | Year of Arrival                |
+| month          | Month of Arrival               |
+| i94res         | Residency Code                 |
+| i94port        | Port of Arrival                |
+| arrdate        | Date of Arrival                |
+| depdate        | Departure Date                 |
+| i94bir         | Age of Immigrant               |
+| dtadfile       | Datefield as Character         |
+| entdepa        | Arrival Flag                   |
+| entdepd        | Departure Flag                 |
+| biryear        | Year of Birth of Immigrant     |
+| gender         | Gender of Immigrant            |
+| airline        | Airline of Arrival             |
+| visatype       | Type of Visa                   |
+| Origin_Country | Country of Origin              |
+| Travelmode     | Mode of Travel                 |
+| Destination    | State of Destination           |
+| Visa           | General Visa Type              |
+
+
+### Airport 
+
+| Field        | Description              |
+| ------------ | ------------------------ |
+| iata_code    | Identity Code of Airport |
+| type         | Type of Airport          |
+| name         | Name of Airport          |
+| elevation_ft | Elevation in Feet        |
+| city         | City                     |
+| iso_country  | Country Code             |
+| iso_region   | Region Code              |
+| municipality | Municipality Code        |
+| gps_code     | GPS Code                 |
+| iata_code    | IATA Code                |
+| local_code   | Local Code               |
+
+### Demographics 
+
+| Field                             | Descritpion                       |
+| --------------------------------- | --------------------------------- |
+| city                              | City Name                         |
+| state                             | State Name                        |
+| media_age                        | Median Age in City                |
+| male_population                   | Number of Male Population         |
+| female_population                 | Number of Female Population       |
+| total_population                  | Number of Total Population        |
+| num_veterans                | Number of Veterans                |
+|foreign_born | Foreign Born Number|
+| average_household_size            | Average Size of Household         |
+| state_code                        | Code of state                     |
+| race | Number of People belongig to Race |
+
+
+
+
+### Temperature 
+
+| Field                              | Descritpion                                     |
+| ---------------------------------- | ----------------------------------------------- |
+|timestamp | Time of the measurement|
+|average_temperature | Avarage temperature|
+|average_temperature_uncertainty | Avarage temperature uncertainty|
+| city                               | City Name                                       |
+|country | Country |
+|latitude| Map Latitude |
+|longitude| Map Longitude |
