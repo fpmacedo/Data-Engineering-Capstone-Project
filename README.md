@@ -76,10 +76,10 @@ The I94 data described immigration events aggregated on a monthly base. Thus, up
 | year           | Year of Arrival                |
 | month          | Month of Arrival               |
 | i94res         | Residency Code                 |
-| i94port        | Port of Arrival                |
+| iata           | Port of Arrival                |
 | arrdate        | Date of Arrival                |
 | depdate        | Departure Date                 |
-| i94bir         | Age of Immigrant               |
+| bir            | Age of Immigrant               |
 | dtadfile       | Datefield as Character         |
 | entdepa        | Arrival Flag                   |
 | entdepd        | Departure Flag                 |
@@ -90,7 +90,7 @@ The I94 data described immigration events aggregated on a monthly base. Thus, up
 | Origin_Country | Country of Origin              |
 | Travelmode     | Mode of Travel                 |
 | Destination    | State of Destination           |
-| Visa           | General Visa Type              |
+| visatype           | General Visa Type              |
 
 
 ### Airport 
